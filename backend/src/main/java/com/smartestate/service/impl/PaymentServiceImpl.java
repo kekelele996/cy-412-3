@@ -16,9 +16,17 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
+    private static final Map<String, BigDecimal> DEFAULT_AMOUNTS = Map.of(
+            "property", new BigDecimal("426.00"),
+            "parking", new BigDecimal("280.00"),
+            "utilities", new BigDecimal("168.50"),
+            "renovation_deposit", new BigDecimal("2000.00"),
+            "garbage_fee", new BigDecimal("300.00")
+    );
     private final PaymentMapper paymentMapper;
     private final OperationLogService operationLogService;
 
@@ -58,8 +66,9 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = new Payment();
         payment.setUserId(request.getUserId());
         payment.setMonth(request.getMonth());
-        payment.setFeeType(request.getFeeType() == null ? "property" : request.getFeeType());
-        payment.setAmount(new BigDecimal("426.00"));
+        String feeType = request.getFeeType() == null ? "property" : request.getFeeType();
+        payment.setFeeType(feeType);
+        payment.setAmount(DEFAULT_AMOUNTS.getOrDefault(feeType, new BigDecimal("426.00")));
         payment.setStatus("unpaid");
         payment.setCreatedAt(LocalDateTime.now());
         paymentMapper.insert(payment);

@@ -10,6 +10,8 @@ const feeTypeText: Record<string, string> = {
   property: '物业费',
   parking: '停车费',
   utilities: '水电费',
+  renovation_deposit: '装修保证金',
+  garbage_fee: '垃圾清运费',
 };
 </script>
 

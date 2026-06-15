@@ -1,7 +1,7 @@
 import type { User } from './user';
 
 export type PaymentStatus = 'unpaid' | 'paid' | 'overdue';
-export type FeeType = 'property' | 'parking' | 'utilities';
+export type FeeType = 'property' | 'parking' | 'utilities' | 'renovation_deposit' | 'garbage_fee';
 
 export interface Payment {
   id: number;

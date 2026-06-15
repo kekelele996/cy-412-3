@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS repairs (
 CREATE TABLE IF NOT EXISTS payments (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   user_id BIGINT NOT NULL,
-  fee_type ENUM('property','parking','utilities') NOT NULL DEFAULT 'property',
+  fee_type ENUM('property','parking','utilities','renovation_deposit','garbage_fee') NOT NULL DEFAULT 'property',
   amount DECIMAL(10,2) NOT NULL,
   month VARCHAR(7) NOT NULL,
   status ENUM('unpaid','paid','overdue') NOT NULL DEFAULT 'unpaid',
@@ -167,7 +167,9 @@ ON DUPLICATE KEY UPDATE title = VALUES(title), status = VALUES(status);
 INSERT INTO payments(id, user_id, fee_type, amount, month, status, paid_at) VALUES
 (1, 3, 'property', 426.00, '2026-06', 'unpaid', NULL),
 (2, 3, 'parking', 280.00, '2026-06', 'paid', '2026-06-03 10:20:00'),
-(3, 3, 'utilities', 168.50, '2026-05', 'paid', '2026-05-28 18:00:00')
+(3, 3, 'utilities', 168.50, '2026-05', 'paid', '2026-05-28 18:00:00'),
+(4, 3, 'renovation_deposit', 2000.00, '2026-06', 'unpaid', NULL),
+(5, 3, 'garbage_fee', 300.00, '2026-06', 'unpaid', NULL)
 ON DUPLICATE KEY UPDATE amount = VALUES(amount), status = VALUES(status);
 
 INSERT INTO announcements(id, title, content, category, publisher_id, publish_at, top, read_count) VALUES
